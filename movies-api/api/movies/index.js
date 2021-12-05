@@ -1,3 +1,6 @@
+import {
+    getUpcomingMovies
+  } from '../tmdb-api';
 import express from 'express';
 import { movies, movieReviews, movieDetails } from './moviesData';
 import uniqid from 'uniqid'
@@ -42,7 +45,11 @@ router.get('/:id/reviews', (req, res) => {
         });
     }
 });
-
+//Get an upcoming movie
+router.get('/tmdb/upcoming', asyncHandler( async(req, res) => {
+    const upcomingMovies = await getUpcomingMovies();
+    res.status(200).json(upcomingMovies);
+  }));
 //Post a movie review
 router.post('/:id/reviews', (req, res) => {
     const id = parseInt(req.params.id);
